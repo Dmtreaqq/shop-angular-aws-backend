@@ -1,0 +1,13 @@
+.idea
+.serverless
+coverage
+node_modules
+.nyc_output
+*.log
+.dynamodb
+.env
+.tmp
+pacts
+logs
+package-lock.json
+.webpack

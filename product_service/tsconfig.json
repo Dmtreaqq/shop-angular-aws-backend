@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "es2017"
+    ],
+    "removeComments": true,
+    "strictNullChecks": true,
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "sourceMap": true,
+    "target": "es2017",
+    "outDir": "lib",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "module": "CommonJS",
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": [
+        "./src/*"
+      ],
+      "@test/*": [
+        "./test/*"
+      ]
+    }
+  },
+  "include": [
+    "./**/*.ts",
+    "./**/*.yaml"
+  ],
+  "exclude": [
+    "node_modules/**/*",
+    ".serverless/**/*",
+    ".webpack/**/*",
+    "_warmup/**/*",
+    ".vscode/**/*"
+  ]
+}
