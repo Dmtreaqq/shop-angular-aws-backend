@@ -1,0 +1,33 @@
+service: aws-shop-backend
+
+custom:
+  stage: dev
+  webpack:
+    packager: 'yarn'
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: eu-west-1
+  stage: ${self:custom.stage}
+
+functions:
+  getProductsList:
+    handler: src/index.getAllProducts
+    events:
+      - http:
+          path: /products
+          method: GET
+  getProductsById:
+    handler: src/index.getProductById
+    events:
+      - http:
+          path: /products/{productId}
+          method: GET
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
