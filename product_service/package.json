@@ -37,6 +37,7 @@
     "lint-staged": "13.0.3",
     "serverless": "3.19.0",
     "serverless-domain-manager": "6.0.3",
+    "serverless-dynamodb-local": "^0.2.40",
     "serverless-offline": "8.8.0",
     "serverless-webpack": "5.7.1",
     "ts-jest": "28.0.5",
