@@ -1,7 +1,7 @@
 service: aws-shop-backend
 
 custom:
-  stage: dev
+  stage: ${opt:stage, 'local'}
   webpack:
     packager: 'yarn'
     webpackConfig: ./webpack.config.js
@@ -17,19 +17,29 @@ custom:
       migrate: true
       seed: true
       convertEmptyValues: true
-#    seed:
-#      local:
-#        sources:
-#          - table: products
-#            sources: ['./src/assets/products-only.json']
-#          - table: stocks
-#            sources: ['./src/assets/stocks-only.json']
+    seed:
+      local:
+        sources:
+          - table: products
+            sources: ['./src/assets/products-only.json']
+          - table: stocks
+            sources: ['./src/assets/stocks-only.json']
 
 provider:
   name: aws
   runtime: nodejs16.x
   region: eu-west-1
   stage: ${self:custom.stage}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:PutItem
+            - dynamodb:GetItem
+            - dynamodb:DeleteItem
 
 functions:
   getProductsList:
@@ -38,12 +48,18 @@ functions:
       - http:
           path: /products
           method: GET
+    environment:
+      PRODUCTS_TABLE_NAME: products
+      STOCKS_TABLE_NAME: stocks
   getProductsById:
     handler: src/index.getProductById
     events:
       - http:
-          path: /products/{productId}
+          path: /products/{id}
           method: GET
+    environment:
+      PRODUCTS_TABLE_NAME: products
+      STOCKS_TABLE_NAME: stocks
 
 resources:
   Resources:
@@ -65,10 +81,10 @@ resources:
       Properties:
         TableName: stocks
         AttributeDefinitions:
-          - AttributeName: id
+          - AttributeName: product_id
             AttributeType: S
         KeySchema:
-          - AttributeName: id
+          - AttributeName: product_id
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
