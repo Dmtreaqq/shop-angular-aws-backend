@@ -1,7 +1,23 @@
 import { Product, Stock }  from '@src/models/models'
 import createError from 'http-errors'
+import { v4 as uuidv4 } from 'uuid'
 import _ from 'lodash'
-import { getAllProducts, getAllStocks, getProductById, getStockById } from '@src/repositories/productRepository'
+import {
+  getAllProducts,
+  getAllStocks,
+  getProductById,
+  getStockById,
+  putProduct
+} from '@src/repositories/productRepository'
+
+export const persistProduct = async (product: Product | undefined): Promise<Product> => {
+  if (product === undefined) {
+    throw new createError.BadRequest('Requested product is not valid')
+  }
+
+  const uuid = uuidv4()
+  return await putProduct({ ...product, id: uuid })
+}
 
 export const retrieveProductById = async (id: string | undefined): Promise<Product> => {
   if (id === undefined) {

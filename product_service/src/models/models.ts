@@ -22,3 +22,7 @@ export type GetProductByIdEvent = APIGatewayEvent & {
     productId: string
   }
 }
+
+export type CreateProductEvent = APIGatewayEvent & {
+  body: Product
+}

@@ -1,7 +1,7 @@
 service: aws-shop-backend
 
 custom:
-  stage: ${opt:stage, 'local'}
+  stage: dev
   webpack:
     packager: 'yarn'
     webpackConfig: ./webpack.config.js
@@ -40,6 +40,9 @@ provider:
             - dynamodb:PutItem
             - dynamodb:GetItem
             - dynamodb:DeleteItem
+          Resource:
+            - !GetAtt products.Arn
+            - !GetAtt stocks.Arn
 
 functions:
   getProductsList:
@@ -57,6 +60,15 @@ functions:
       - http:
           path: /products/{id}
           method: GET
+    environment:
+      PRODUCTS_TABLE_NAME: products
+      STOCKS_TABLE_NAME: stocks
+  createProduct:
+    handler: src/index.createProductHandler
+    events:
+      - http:
+          path: /products
+          method: POST
     environment:
       PRODUCTS_TABLE_NAME: products
       STOCKS_TABLE_NAME: stocks
