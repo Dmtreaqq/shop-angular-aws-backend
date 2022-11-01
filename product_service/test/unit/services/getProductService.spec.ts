@@ -1,5 +1,5 @@
 import { GetProductByIdEvent } from '@src/models/models'
-import * as productService from '@src/services/getProductService'
+import * as productService from '@src/services/productService'
 
 describe('Get product service', () => {
   beforeAll(() => {})
