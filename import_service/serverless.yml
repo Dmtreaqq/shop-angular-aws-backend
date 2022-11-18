@@ -1,0 +1,43 @@
+service: import-service
+
+custom:
+  stage: dev
+  webpack:
+    packager: 'yarn'
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: eu-west-1
+  stage: ${self:custom.stage}
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action: 's3:ListBucket'
+      Resource: 'arn:aws:s3:::dmytro-shop-import-service'
+    - Effect: 'Allow'
+      Action: 's3:*'
+      Resource: 'arn:aws:s3:::dmytro-shop-import-service/*'
+
+functions:
+  importProductsFile:
+    handler: src/index.importProductsFile
+    events:
+      - http:
+          path: /import
+          method: GET
+  importFileParser:
+    handler: src/index.importFileParser
+    events:
+      - s3:
+          bucket: dmytro-shop-import-service
+          event: s3:ObjectCreated:*
+          rules:
+              - prefix: uploaded
+          existing: true
+    
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
