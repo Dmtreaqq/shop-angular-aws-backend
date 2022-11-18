@@ -18,6 +18,7 @@
     "@middy/http-header-normalizer": "^3.6.0",
     "@middy/http-json-body-parser": "^3.6.0",
     "bfj": "^7.0.2",
+    "csv-parser": "^3.0.0",
     "http-errors": "^2.0.0"
   },
   "devDependencies": {

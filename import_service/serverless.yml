@@ -27,6 +27,16 @@ functions:
       - http:
           path: /import
           method: GET
+  importFileParser:
+    handler: src/index.importFileParser
+    events:
+      - s3:
+          bucket: dmytro-shop-import-service
+          event: s3:ObjectCreated:*
+          rules:
+              - prefix: uploaded
+          existing: true
+    
 
 plugins:
   - serverless-webpack

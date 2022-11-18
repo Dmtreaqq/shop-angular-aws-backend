@@ -1,5 +1,5 @@
-import { importProduct } from '@src/services/importService'
-import { ImportProductEvent } from '@src/models/Events'
+import { importProduct, parseProductCsv } from '@src/services/importService'
+import { ImportProductEvent, ParseProductEvent } from '@src/models/Events'
 import createError from 'http-errors'
 
 export const importProductController = async (event: ImportProductEvent): Promise<any> => {
@@ -14,4 +14,8 @@ export const importProductController = async (event: ImportProductEvent): Promis
     }
 
     return await importProduct(name, event.body)
+}
+
+export const parseProductController = async (event: ParseProductEvent): Promise<any> => {
+    return await parseProductCsv(event.Records[0].s3.object.key)
 }
