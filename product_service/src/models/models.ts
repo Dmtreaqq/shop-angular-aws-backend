@@ -1,4 +1,4 @@
-import { APIGatewayEvent } from 'aws-lambda'
+import { APIGatewayEvent, SQSEvent } from 'aws-lambda'
 
 export interface ResponseBody {
   statusCode: number
@@ -25,4 +25,10 @@ export type GetProductByIdEvent = APIGatewayEvent & {
 
 export type CreateProductEvent = APIGatewayEvent & {
   body: Product
+}
+
+export type ImportProductsEvent = SQSEvent & {
+  Records: {
+    body: Product
+  }
 }

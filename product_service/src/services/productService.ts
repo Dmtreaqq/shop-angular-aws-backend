@@ -19,6 +19,16 @@ export const persistProduct = async (product: Product | undefined): Promise<Prod
   return await putProduct({ ...product, id: uuid })
 }
 
+export const importProductsFromCsv = async (products: Product[] | undefined): Promise<any> => {
+  if (products === undefined) {
+    throw new createError.BadRequest('Requested products is not valid')
+  }
+
+  for (let i = 0; i < products.length; i++) {
+    await persistProduct(products[i])
+  }
+}
+
 export const retrieveProductById = async (id: string | undefined): Promise<Product> => {
   if (id === undefined) {
     throw new createError.BadRequest('Product id is undefined')
