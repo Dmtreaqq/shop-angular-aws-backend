@@ -72,6 +72,15 @@ functions:
     environment:
       PRODUCTS_TABLE_NAME: products
       STOCKS_TABLE_NAME: stocks
+  catalogBatchProcess:
+    handler: src/index.catalogBatchProcess
+    events:
+      - sqs:
+          arn: !GetAtt catalogItemsQueue.Arn
+          batchSize: 5
+    environment:
+      PRODUCTS_TABLE_NAME: products
+      STOCKS_TABLE_NAME: stocks
 
 resources:
   Resources:
@@ -101,6 +110,10 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+    catalogItemsQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: catalogItemsQueue
 
 plugins:
   - serverless-webpack

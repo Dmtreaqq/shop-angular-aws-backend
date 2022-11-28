@@ -17,5 +17,5 @@ export const importProductController = async (event: ImportProductEvent): Promis
 }
 
 export const parseProductController = async (event: ParseProductEvent): Promise<any> => {
-    return await parseProductCsv(event.Records[0].s3.object.key)
+    await parseProductCsv(event.Records[0].s3.object.key)
 }

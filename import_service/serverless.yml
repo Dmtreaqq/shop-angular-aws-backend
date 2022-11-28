@@ -19,6 +19,9 @@ provider:
     - Effect: 'Allow'
       Action: 's3:*'
       Resource: 'arn:aws:s3:::dmytro-shop-import-service/*'
+    - Effect: 'Allow'
+      Action: 'sqs:SendMessage'
+      Resource: 'arn:aws:sqs:eu-west-1:192675374686:catalogItemsQueue'
 
 functions:
   importProductsFile:
@@ -36,7 +39,6 @@ functions:
           rules:
               - prefix: uploaded
           existing: true
-    
 
 plugins:
   - serverless-webpack
