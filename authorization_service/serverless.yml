@@ -12,8 +12,6 @@ provider:
 functions:
   basicAuthorizer:
     handler: handler.basicAuthorizer
-    events:
-      - http: GET hello
 
 plugins:
   - serverless-offline
