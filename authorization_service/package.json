@@ -1,0 +1,10 @@
+{
+  "name": "aws-shop-authorization-service",
+  "version": "1.0.0",
+  "main": "handler.js",
+  "license": "MIT",
+  "devDependencies": {
+    "serverless-dotenv-plugin": "^4.0.2",
+    "serverless-offline": "^11.6.0"
+  }
+}

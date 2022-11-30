@@ -1,0 +1,20 @@
+service: aws-shop-authorization-service
+
+custom:
+  stage: dev
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: eu-west-1
+  stage: ${self:custom.stage}
+
+functions:
+  basicAuthorizer:
+    handler: handler.basicAuthorizer
+    events:
+      - http: GET hello
+
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
